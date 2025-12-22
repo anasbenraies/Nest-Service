@@ -1,0 +1,11 @@
+*commands for creating project , controllers , services 
+*create DTO with "class validator" and "class transformer" packages
+*add the pipeline validator to the main.ts
+install "typeorm" "nestjs/typeorm(verify this name)" "pg" or "mysql2"  packages to work with orm and databases
+create docker-compose to run db  
+create the orm config file 
+import the orm config inside the app module 
+when creating the repository ( example user repo ) , import it in the module example (user module)
+npm i --save @nestjs/jwt passport-jwt
+npm install --save @nestjs/passport passport passport-local
+the syncronize in the ormconfig ( search about it )
