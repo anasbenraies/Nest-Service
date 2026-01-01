@@ -3,13 +3,27 @@ import { CreateUserDto, UpdateUserDto } from './createUserDto';
 import { Repository, UpdateResult } from 'typeorm';
 import { User } from 'src/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
+  
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) { }
+
+
+
+
+
+  async addRefreshToken(id: number, refreshToken: string): Promise<void> {
+
+    const salt: string = await bcrypt.genSalt(10);
+    const RefreshTokenHash = await bcrypt.hash(refreshToken, salt);
+    
+    await this.userRepository.update(id, { refreshToken: RefreshTokenHash });
+  }
 
   //------------------------------//
 
@@ -46,6 +60,13 @@ export class UserService {
   }
 
   //------------------------------//
+
+
+  async findById(id: number): Promise<User| null> {
+    return await this.userRepository.findOne({ where: { id } });
+  }
+
+
 
 
   /**

@@ -1,9 +1,11 @@
-import {Entity, 
-        PrimaryGeneratedColumn,
-        Column, 
-        BeforeInsert,
-        OneToMany,
-        BeforeUpdate} from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  OneToMany,
+  BeforeUpdate
+} from 'typeorm';
 import { Comment } from './comment.entity';
 
 import * as bcrypt from 'bcrypt';
@@ -13,20 +15,23 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({nullable:false})
+  @Column({ nullable: false })
   name: string;
 
-  @Column({unique: true, nullable: false})
+  @Column({ unique: true, nullable: false })
   email: string;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   phone: string;
 
-  @OneToMany((type)=>Comment , (comment)=>comment.user)
-  comments:Comment[]
+  @OneToMany((type) => Comment, (comment) => comment.user)
+  comments: Comment[]
 
-  @Column({nullable:false})
-  password:string
+  @Column({ nullable: false })
+  password: string
+
+  @Column({ nullable: true })
+  refreshToken: string;
 
   @BeforeInsert()
   @BeforeUpdate()
