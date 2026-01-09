@@ -13,10 +13,6 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) { }
 
-
-
-
-
   async addRefreshToken(id: number, refreshToken: string): Promise<void> {
 
     const salt: string = await bcrypt.genSalt(10);
@@ -92,5 +88,9 @@ export class UserService {
     } as User);
     return await this.userRepository.update(id, user);
 
+  }
+
+  removeRefreshTokenByUserId(id: number) {
+    return this.userRepository.update(id, { refreshToken: "null" });
   }
 }

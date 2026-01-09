@@ -12,7 +12,7 @@ export class JwtAuthGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    console.log("beggining of the guard")
+    console.log('beggining of the guard');
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     console.log("this is the token "+  token)

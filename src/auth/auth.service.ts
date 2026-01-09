@@ -13,6 +13,8 @@ import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
+
+
     constructor(
         private usersService: UserService,
         private jwtService: JwtService,
@@ -35,8 +37,8 @@ export class AuthService {
         const accessToken = await this.generateAccessToken(String(user.id), user.email);
         const refreshToken = await this.generateRefreshToken(String(user.id));
 
-         // save the refresh token to the user's data 
-        await this.usersService.addRefreshToken(user.id,  refreshToken);
+        // save the refresh token to the user's data 
+        await this.usersService.addRefreshToken(user.id, refreshToken);
 
         return {
             accessToken,
@@ -71,7 +73,7 @@ export class AuthService {
         const refreshToken = await this.generateRefreshToken(String(user.id));
 
         // save the refresh token to the user's data 
-        await this.usersService.addRefreshToken(user.id,  refreshToken);
+        await this.usersService.addRefreshToken(user.id, refreshToken);
 
         return {
             accessToken,
@@ -95,7 +97,7 @@ export class AuthService {
     async generateRefreshToken(userId: string) {
         return await this.jwtService.signAsync(
             { sub: userId },
-            { expiresIn: '7d' },
+            { expiresIn: '7d', secret: process.env.refresh_secret },
         );
     }
 
@@ -121,6 +123,19 @@ export class AuthService {
         } catch {
             throw new UnauthorizedException('Invalid token');
         }
+    }
+
+    async removeRefreshToken(refreshToken: any) {
+        const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: process.env.refresh_secret,
+      });
+      const userId = payload.sub ;
+      // remove the refresh token of the user that owns the refresh token .
+        const removed = await this.usersService.removeRefreshTokenByUserId(userId);
+        if (!removed){
+           console.log("Refresh token not found / can\'t be removed'")
+        }
+        console.log("'Refresh token removed'")
     }
 
 
