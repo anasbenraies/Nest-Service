@@ -9,5 +9,5 @@ export const ormConfig: PostgresConnectionOptions = {
   username: 'postgres',
   password: 'postgres',
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  synchronize: true,
+  //synchronize: true,
 };

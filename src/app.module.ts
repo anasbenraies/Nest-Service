@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtAuthGuard } from './auth/guards/jwt-auth-guard';
 import { JwtService } from '@nestjs/jwt';
+import { CommentModule } from './comment/comment.module';
 
 // import the modules created here , with the orm config 
 @Module({
@@ -15,7 +16,7 @@ import { JwtService } from '@nestjs/jwt';
     ConfigModule.forRoot({
       isGlobal: true, // very important
     })
-  , AuthModule],
+  , AuthModule, CommentModule],
   controllers: [AppController],
   providers: [AppService],
 })

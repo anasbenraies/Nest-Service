@@ -33,16 +33,16 @@ export class User {
   @Column({ nullable: true })
   refreshToken: string;
 
-  @BeforeInsert()
-  @BeforeUpdate()
-  async createHash(): Promise<void> {
-    try {
-      console.log("this is a hashing for update or Insert")
-      const salt: string = await bcrypt.genSalt(10);
-      this.password = await bcrypt.hash(this.password, salt);
-    } catch (error) {
-      throw new Error('Could not create hash for password');
-    }
-  }
+  // @BeforeInsert()
+  // @BeforeUpdate()
+  // async createHash(): Promise<void> {
+  //   try {
+  //     console.log("this is a hashing for update or Insert")
+  //     const salt: string = await bcrypt.genSalt(10);
+  //     this.password = await bcrypt.hash(this.password, salt);
+  //   } catch (error) {
+  //     throw new Error('Could not create hash for password');
+  //   }
+  // }
 
 }

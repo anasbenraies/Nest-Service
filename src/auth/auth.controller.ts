@@ -58,6 +58,7 @@ export class AuthController {
             secret: process.env.refresh_secret
         });
         const accessToken = await this.authService.refresh(payload.sub, refreshToken);
+        console.log("the id of the user is : " + payload.sub);
         return accessToken;
     }
 
